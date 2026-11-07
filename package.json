@@ -1,0 +1,13 @@
+{
+  "name": "webstudio-scss",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Проєкт WebStudio на SCSS (GoITeens Frontend). Ретинізація зображень 1x/2x/3x.",
+  "scripts": {
+    "watch:css": "sass --watch scss:css",
+    "build:css": "sass scss/main.scss css/main.css"
+  },
+  "devDependencies": {
+    "sass": "^1.108.1"
+  }
+}

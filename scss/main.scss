@@ -1,0 +1,717 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+// ============================
+// База
+// ============================
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    color: $color-text;
+    background: $color-white;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+.container {
+    width: calc(100% - 30px);
+    margin: 0 auto;
+}
+
+// ============================
+// Хедер
+// ============================
+
+header {
+    background: $color-white;
+    border-bottom: 1px solid $color-border;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 80px;
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: 700;
+    color: $color-accent;
+    animation: logoAnimation 1s ease;
+
+    span {
+        color: $color-text;
+    }
+}
+
+.desktop-nav,
+.contacts {
+    display: none;
+}
+
+.menu-button {
+    display: block;
+    border: 0;
+    background: transparent;
+    color: $color-text;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+// ============================
+// Мобільне меню
+// ============================
+
+.mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: $color-white;
+    padding: 30px;
+    transform: translateX(100%);
+    visibility: hidden;
+    transition:
+        transform 0.45s ease,
+        visibility 0.45s ease;
+
+    &.is-open {
+        transform: translateX(0);
+        visibility: visible;
+    }
+}
+
+.menu-close {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    background: transparent;
+    color: $color-text;
+    font-size: 38px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 70px;
+
+    a {
+        color: $color-text;
+        text-decoration: none;
+        font-size: 32px;
+        font-weight: 700;
+        transform: translateX(40px);
+        opacity: 0;
+        transition:
+            transform 0.4s ease,
+            opacity 0.4s ease,
+            color 0.3s ease;
+
+        &:hover,
+        &.current {
+            color: $color-accent;
+        }
+    }
+
+    // анімація появи пунктів меню
+    .mobile-menu.is-open & {
+        a {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        a:nth-child(1) {
+            transition-delay: 0.1s;
+        }
+
+        a:nth-child(2) {
+            transition-delay: 0.2s;
+        }
+
+        a:nth-child(3) {
+            transition-delay: 0.3s;
+        }
+    }
+}
+
+.mobile-contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 60px;
+
+    a {
+        color: $color-grey;
+        text-decoration: none;
+        font-size: 16px;
+    }
+}
+
+// ============================
+// Hero
+// ============================
+
+.hero {
+    background:
+        radial-gradient(circle at center, rgba(33, 150, 243, 0.25), transparent 60%),
+        linear-gradient(135deg, $color-dark 0%, $color-darker 100%);
+    text-align: center;
+    padding: 80px 15px;
+
+    // На планшеті та десктопі додаємо фото-робочого місця з затемненням.
+    // Фон підключається один раз, а далі ретинізується через вкладені
+    // медіазапити (завдання уроку 68).
+    @media (min-width: $breakpoint-tablet) {
+        background:
+            linear-gradient(rgba(47, 48, 58, 0.8), rgba(47, 48, 58, 0.8)),
+            url("../imgs/hero-bg.jpg") center / cover no-repeat;
+
+        @include retina {
+            background:
+                linear-gradient(rgba(47, 48, 58, 0.8), rgba(47, 48, 58, 0.8)),
+                url("../imgs/hero-bg@2x.jpg") center / cover no-repeat;
+        }
+    }
+
+    h1 {
+        width: 100%;
+        max-width: 700px;
+        margin: 0 auto 30px;
+        color: $color-white;
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 1.3;
+        animation: heroTitle 1.2s ease;
+    }
+
+    button {
+        border: none;
+        border-radius: 4px;
+        padding: 15px 35px;
+        background: linear-gradient(135deg, $color-accent 0%, $color-accent-mid 100%);
+        color: $color-white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+        animation: heroButton 1.5s ease;
+        box-shadow: 0 4px 10px rgba(33, 150, 243, 0.3);
+
+        &:hover {
+            background: linear-gradient(135deg, $color-accent-mid 0%, $color-accent-deep 100%);
+            box-shadow: 0 6px 15px rgba(33, 150, 243, 0.4);
+        }
+    }
+}
+
+// ============================
+// Features
+// ============================
+
+.features {
+    padding: 60px 0;
+}
+
+.features-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.feature {
+    width: 100%;
+    animation: cardAppear 1s ease;
+
+    h3 {
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+
+    p {
+        color: $color-grey;
+        font-size: 14px;
+        line-height: 1.7;
+    }
+}
+
+// ============================
+// "Чим ми займаємося"
+// ============================
+
+.work {
+    padding-bottom: 60px;
+}
+
+.work h2,
+.team h2 {
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 28px;
+}
+
+.work-images {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+
+    img {
+        width: 100%;
+        max-width: 370px;
+        height: auto;
+        object-fit: cover;
+        transition: 0.4s;
+
+        &:hover {
+            transform: scale(1.05);
+        }
+    }
+}
+
+// ============================
+// Команда
+// ============================
+
+.team {
+    background: $color-bg-grey;
+    padding: 60px 0;
+}
+
+.team-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.member {
+    width: 100%;
+    max-width: 270px;
+    padding-bottom: 30px;
+    background: $color-white;
+    text-align: center;
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.1),
+        0 8px 20px rgba(0, 0, 0, 0.05);
+    animation: cardAppear 1.2s ease;
+    transition: 0.3s;
+
+    &:hover {
+        transform: translateY(-10px);
+        box-shadow:
+            0 8px 20px rgba(0, 0, 0, 0.12),
+            0 15px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    img {
+        width: 100%;
+        height: 260px;
+        object-fit: cover;
+    }
+
+    h3 {
+        margin-top: 30px;
+        margin-bottom: 10px;
+        font-size: 16px;
+    }
+
+    p {
+        color: $color-grey;
+        font-size: 16px;
+    }
+}
+
+// ============================
+// Футер
+// ============================
+
+footer {
+    padding: 60px 0;
+    background: $color-dark;
+
+    .logo {
+        margin-bottom: 20px;
+    }
+
+    p {
+        margin-bottom: 10px;
+        color: #ffffff99;
+        font-size: 14px;
+    }
+}
+
+// ============================
+// Портфоліо
+// ============================
+
+.portfolio {
+    padding: 40px 0;
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 30px;
+
+    button {
+        border: none;
+        border-radius: 4px;
+        padding: 10px 18px;
+        background: $color-bg-grey;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background 0.3s, color 0.3s;
+
+        &:hover {
+            background: $color-accent;
+            color: $color-white;
+        }
+    }
+
+    .active {
+        background: $color-accent;
+        color: $color-white;
+    }
+}
+
+.portfolio-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+}
+
+.card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid $color-line;
+    background: $color-white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: 0.3s;
+
+    &:hover {
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1.45;
+        object-fit: cover;
+    }
+}
+
+.card-info {
+    padding: 20px;
+
+    h3 {
+        margin-bottom: 10px;
+        font-size: 18px;
+    }
+
+    p {
+        color: $color-grey;
+    }
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 77px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+
+    background: linear-gradient(
+        135deg,
+        rgba(33, 150, 243, 0.95) 0%,
+        rgba(21, 101, 192, 0.9) 100%
+    );
+
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+
+    p {
+        color: $color-white;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+}
+
+.card:hover .overlay {
+    opacity: 1;
+    visibility: visible;
+}
+
+// ============================
+// Адаптив
+// ============================
+
+@media (min-width: $breakpoint-sm) {
+    .container {
+        width: 450px;
+    }
+
+    .portfolio-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: $breakpoint-tablet) {
+    .container {
+        width: 738px;
+    }
+
+    .menu-button {
+        display: none;
+    }
+
+    .desktop-nav,
+    .contacts {
+        display: flex;
+    }
+
+    .desktop-nav {
+        gap: 35px;
+
+        a {
+            position: relative;
+            color: $color-text;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+
+            &:hover,
+            &.current {
+                color: $color-accent;
+            }
+
+            &.current::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                bottom: -32px;
+                width: 100%;
+                height: 4px;
+                border-radius: 2px;
+                background: $color-accent;
+            }
+        }
+    }
+
+    .contacts {
+        flex-direction: column;
+        gap: 5px;
+        color: $color-grey;
+        font-size: 14px;
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+    }
+
+    .mobile-menu {
+        display: none;
+    }
+
+    .hero {
+        padding: 150px 20px;
+
+        h1 {
+            font-size: 36px;
+        }
+    }
+
+    .features {
+        padding: 80px 0;
+    }
+
+    .features-wrap {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .feature {
+        width: calc(50% - 15px);
+    }
+
+    .work {
+        padding-bottom: 80px;
+    }
+
+    .work-images {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .team {
+        padding: 80px 0;
+    }
+
+    .team-wrap {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .portfolio {
+        padding: 60px 0;
+    }
+
+    .portfolio-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: $breakpoint-desktop) {
+    .container {
+        width: 1200px;
+    }
+
+    .desktop-nav {
+        gap: 50px;
+    }
+
+    .contacts {
+        flex-direction: row;
+        gap: 20px;
+    }
+
+    .hero {
+        padding: 200px 20px;
+
+        h1 {
+            font-size: 44px;
+            line-height: 1.4;
+        }
+    }
+
+    .features {
+        padding: 94px 0;
+    }
+
+    .features-wrap {
+        flex-wrap: nowrap;
+    }
+
+    .feature {
+        width: 270px;
+    }
+
+    .work {
+        padding-bottom: 94px;
+    }
+
+    .work h2,
+    .team h2 {
+        margin-bottom: 50px;
+        font-size: 36px;
+    }
+
+    .work-images {
+        flex-wrap: nowrap;
+    }
+
+    .team {
+        padding: 94px 0;
+    }
+
+    .team-wrap {
+        flex-wrap: nowrap;
+    }
+
+    .portfolio {
+        padding: 80px 0;
+    }
+
+    .portfolio-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .card img {
+        height: 260px;
+        aspect-ratio: auto;
+    }
+
+    .overlay {
+        height: 260px;
+    }
+}
+
+// ============================
+// Анімації
+// ============================
+
+@keyframes heroTitle {
+    0% {
+        opacity: 0;
+        transform: translateY(-60px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes heroButton {
+    0% {
+        opacity: 0;
+        transform: scale(0.6);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes cardAppear {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes logoAnimation {
+    0% {
+        transform: rotate(-10deg);
+    }
+
+    50% {
+        transform: rotate(10deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}

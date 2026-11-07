@@ -1,0 +1,13 @@
+// Медіазапит для ретина-екранів (щільність пікселів 2+).
+// Бонусне завдання уроку 68: один mixin замість повторів
+// "(min-resolution: 2dppx)" по всьому файлу.
+//
+// Використання:
+// @include retina {
+//     background-image: url("../imgs/hero-bg@2x.jpg");
+// }
+@mixin retina {
+    @media (min-resolution: 2dppx) {
+        @content;
+    }
+}
